@@ -2,4 +2,10 @@
 .idea
 *gradle*
 build
-Tic-Tac-Toe with AI/task/test
+test
+*.yaml
+Fight!
+First move!
+User is a gamemaster
+Welcome to the battlefield!
+What's up on a field
