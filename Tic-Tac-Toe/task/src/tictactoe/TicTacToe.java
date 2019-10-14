@@ -11,18 +11,22 @@ public class TicTacToe {
 
     public TicTacToe(Scanner scanner) {
         this.scanner = scanner;
-        this.turn = 'X';
     }
 
     public void run() {
-        String placing = getStartingPlacing();
+        this.turn = 'X';
 
-        this.board = new Board(placing);
-        System.out.print(board);
-
-        makeMove();
-
+        this.board = new Board();
         System.out.println(board);
+
+        do {
+            makeMove();
+            System.out.println(board);
+            state = BoardStateChecker.complexCheck(board);
+            changePlayerTurn();
+        } while(state == States.NOT_FINISHED);
+
+        printBoardState();
     }
 
     private void changePlayerTurn() {
@@ -41,13 +45,13 @@ public class TicTacToe {
 
     }
 
-    private void printBoardState(Board board,States state) {
+    private void printBoardState() {
         String message = "";
 
         switch(state) {
             case DRAW: message = "Draw"; break;
-            case PLAYER1_WINS: message = board.getPlayer1Sign() + " wins"; break;
-            case PLAYER2_WINS: message = board.getPlayer2Sign() + " wins"; break;
+            case PLAYER1_WINS: message = "X wins"; break;
+            case PLAYER2_WINS: message = "O wins"; break;
             case IMPOSSIBLE: message = "Impossible"; break;
             case NOT_FINISHED: message = "Player " + turn + " turn"; break;
         }
@@ -56,13 +60,18 @@ public class TicTacToe {
     }
 
     private Coordinates getCorrectCoordinates() {
-        int x, y;
+        String xInput, yInput;
 
         do {
             System.out.print("Enter the coordinates: ");
-            y = Integer.parseInt(scanner.next())-1;
-            x = 2-(Integer.parseInt(scanner.next())-1);
-        } while(!board.isCorrect(x, y));
+
+            yInput = scanner.next();
+            xInput = scanner.next();
+
+        } while(!board.isCorrect(xInput, yInput));
+
+        int y = Integer.parseInt(yInput) - 1;
+        int x = 2 - (Integer.parseInt(xInput) - 1);
 
         return new Coordinates(x, y);
     }

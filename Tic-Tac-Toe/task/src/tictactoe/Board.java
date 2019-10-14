@@ -5,14 +5,11 @@ public class Board {
     private final char player1Sign = 'X';
     private final char player2Sign = 'O';
 
-    private char[][] board;
+    private char[][] board = new char[][]{{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
 
-    public Board() {
-        board = new char[3][3];
-    }
+    public Board(){};
 
     public Board(String state) {
-        this();
         state = state.replace('_', ' ');
         int k = 0;
 
@@ -36,7 +33,16 @@ public class Board {
         return player2Sign;
     }
 
-    public boolean isCorrect(int x, int y) {
+    public boolean isCorrect(String xInput, String yInput) {
+        int x, y;
+        try {
+            y = Integer.parseInt(yInput) - 1;
+            x = 2 - (Integer.parseInt(xInput) - 1);
+        } catch(Exception e) {
+            System.out.println("You should enter numbers!");
+            return false;
+        }
+
         if( (x < 0 || x >= board.length) || (y < 0 || y >= board[0].length) ) {
             System.out.println("Coordinates should be from 1 to 3!");
             return false;
