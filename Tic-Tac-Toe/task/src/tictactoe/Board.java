@@ -36,6 +36,24 @@ public class Board {
         return player2Sign;
     }
 
+    public boolean isCorrect(int x, int y) {
+        if( (x < 0 || x >= board.length) || (y < 0 || y >= board[0].length) ) {
+            System.out.println("Coordinates should be from 1 to 3!");
+            return false;
+        }
+
+        if(board[x][y] != 'X' && board[x][y] != 'O') {
+            return true;
+        }
+
+        System.out.println("This cell is occupied! Choose another one!");
+        return false;
+    }
+
+    public void makeMove(Coordinates coordinates, char player) {
+        this.board[coordinates.getX()][coordinates.getY()] = player;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
